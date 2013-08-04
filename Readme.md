@@ -219,6 +219,7 @@ be defined as:
     "max": 9
   }
 }
+```
 
 Note that above definition uses "digit:meta" key to define metadata
 for the `digit` type. Metadata keys must be mapped to an objects who's
