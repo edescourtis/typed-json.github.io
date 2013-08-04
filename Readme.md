@@ -162,7 +162,7 @@ It is also possible to define fixed size collections:
 ```json
 {
   "int": "http://typed-json.org/#int",
-  "point": [int, 2]
+  "point": ["int", 2]
   "line": ["point", 2]
 }
 ```
@@ -237,7 +237,7 @@ and `boolean` types:
 {
   "readyStatus": 1,
   "readyState": "'complete'",
-  "yes": "true",
+  "yes": true,
 }
 ```
 
@@ -257,8 +257,8 @@ allow structures that can contain either of listed types:
 ```json
 {
   "string": "http://typed-json.org/#string",
-  "pending": {"pending":"true"},
-  "complete": {"data": "string"}
+  "pending": { "pending": true },
+  "complete": { "data": "string" }
   "status": "pending|complete"
 }
 ```
