@@ -6,36 +6,46 @@ to do some type safety guarantees.
 
 ## Format
 
-Every type is associtade with a unique URI. While it's recommended to have
-type definition under that URI it's not a requirement, but rather a unique
-identifier for the given type. All primitive types are also associated with
-a specific URIs. This specification definese set of following primitive types:
+Every type is associtade with a unique URI. It is recommended to have a type
+definition under that URI, but it is not a requirement, it is up to implementor
+to associate actual definitions with a URI, in other words type URIs are just
+a unique identifiers for types.
 
-### null
+Format defines some base primitive types that are also associated with specific
+URIs. This specification recognizes following primitive types:
 
-Primitive type representing absense of value. It can be aliased in a local
-typegraph file as follows:
+### Null
+
+Primitive type representing an absense of value. In the type vocabulary they
+can be referenced either by URI or aliased as a local type and referced by
+alias name:
 
 
 ```json
 {
-  "null": "http://typed-json.org/#null"
+  "null": "http://typed-json.org/#Null"
 }
 ```
 
-*Note: `"null"` is just an identifier that will be used to refer to `null`
-type in the rest of the graph, but any different identifier would work just
-fine*
+*Note: Above definition defines `"null"` just as an alias to primitive
+http://typed-json.org/#null type, so that rest of the type vocabulary
+would be able to refer to it by that identifier.*
 
 
-Since `null` is valid JSON primitive it can be referenced in type definitions
-as `null` which will be equivalent of `http://typed-json.org/#null`.
+Since `null` is valid JSON primitive it can be used instead of URI
+http://typed-json.org/#null. For example type `empty` can be defined
+as an alias to http://typed-json.org/#null as follows:
+
+```json
+{
+  "empty": null
+}
+```
 
 
-### boolean
+### Boolean
 
-Boolean type that can be either `true` or `false`. Booleans can be aliased in
-a local typegraph file as:
+Boolean type can be aliased as `bool` as follows:
 
 ```json
 {
@@ -44,15 +54,21 @@ a local typegraph file as:
 ```
 
 
-### integer
+### Int
+
+Ints type can be aliased as `int` as follows:
 
 ```json
 {
-  "int": "http://typed-json.org/#integer"
+  "int": "http://typed-json.org/#int"
 }
 ```
 
-### float
+*Note: int is JS int*
+
+### Float
+
+Float type can be aliased as `float` as follows:
 
 ```json
 {
@@ -60,7 +76,9 @@ a local typegraph file as:
 }
 ```
 
-### string
+### String
+
+String type can be aliased as `float` as follows:
 
 ```json
 {
@@ -70,44 +88,43 @@ a local typegraph file as:
 
 ## Composite types
 
-Main use of typograph is for defining composite type structures. There are
+Typed JSON is used mainly for defining composite type structures. There are
 few type structures that can be expressed:
 
 ### Records
 
-Record types represent JSON objects with a specific structure. They are defined
-by providing signiture of it's fields:
+Record types represent JSON objects with a specific structure. They are
+defined in terms of field type signatures:
 
 
 ```json
 {
   "point": {
-    "x": "http://typed-json.org/#integer",
-    "y": "http://typed-json.org/#integer"
+    "x": "http://typed-json.org/#int",
+    "y": "http://typed-json.org/#int"
   }
 }
 ```
 
-Above typograph defines `point` type that **Must** have `x` and `y` fields
-with an integer values. In this example actual integer type identifiers were
-used, but same could have being expressed by aliasing integer type:
+Above JSON defines `point` type that **Must** have `x` and `y` fields
+of `int` type. This example uses full URIs to for field type definitions,
+but that's redundant and could be expressed in more eloquent manner:
 
 
 ```json
 {
-  "int": "http://typed-json.org/#integer",
+  "int": "http://typed-json.org/#int",
   "point": { "x": "int", "y": "int" }
 }
 ```
 
-More complex structures could be defined by reusing types defined earlier:
+Composite data type definitions can refer to other composite types:
 
 ```json
 {
-  "int": "http://typed-json.org/#integer",
+  "int": "http://typed-json.org/#int",
   "point": { "x": "int", "y": "int" },
   "line": {
-    "color": "string",
     "start": "point",
     "end": "point"
   }
@@ -117,50 +134,55 @@ More complex structures could be defined by reusing types defined earlier:
 ### Collections
 
 Collections like arrays (different languages could use different collection
-types like lists for example) are expressed as follows:
+types, lists for example) must contain items of certain type(s) and are defined
+as follows:
 
 ```json
 {
-  "int": "http://typed-json.org/#integer",
-  "graph": ["int"]
-}
-```
-
-Composite types can be used to compose new collection types:
-
-
-```json
-{
-  "int": "http://typed-json.org/#integer",
+  "int": "http://typed-json.org/#int",
   "point": { "x": "int", "y": "int" },
   "shape": ["point"]
 }
 ```
 
-### Tuples
+*Note: Above example above defines `shape` type that is
+collection of `point` type items of arbitrary number*
 
-Tuples are just a records with indexed fields that are represented
-via arrays in JSON. They can be defined as follows:
+Following JSON data would match `shape` type:
+
+```js
+[{"x":0, "y":0}]
+[{"x":0, "y":0}, {"x": 0, "y": 10}]
+[{"x":0, "y":0}, {"x": 0, "y": 10}, {"x": 10: "y": 10}]
+```
+
+It is also possible to define fixed size collections:
+
 
 ```json
 {
-  "int": "http://typed-json.org/#integer",
-  "point": { "x": "int", "y": "int" },
-  "line": { "0": "point", "1": "point" }
+  "int": "http://typed-json.org/#int",
+  "point": [int, 2]
+  "line": ["point", 2]
 }
 ```
 
-Above defined `line` type defines structure for values like:
+Following JSON data would match `line` type definition:
 
 ```js
-[{x: 0, y: 0}, {x:0, y: 10}]
+[[0,0], [0,10]]
+[[0,0], [10,10]]
 ```
 
-Tupeles can also hold different types of values:
+### Tuples
+
+Tuples are fixed size JS arrays, in contrast to regular fixed
+size arrays they define element types by index and there for
+are preferable for defining mixed type arrays:
 
 ```json
 {
-  "int": "http://typed-json.org/#integer",
+  "int": "http://typed-json.org/#int",
   "string": "http://typed-json.org/#string",
   "color": "string",
   "point": { "x": "int", "y": "int" },
@@ -175,6 +197,7 @@ Above defined `pixel` type defines structure for values like:
 
 ```js
 [{x:0, y:0}, "red"]
+[{x:0, y:12}, "green"]
 ````
 
 *Note: That "color" is just an alias for a string with a different
@@ -182,73 +205,97 @@ semantic meaning. It's useful to give semantic meaning to an entities
 used in type definitions, that allows changing types of those entities
 independently from computed types*
 
+## Metadata
 
-Tuples also be used for defining types for fixed size collections. Note
-that there's no need to define types for each individual index on a tuple
-as definition implies that type of the lower indexed elements is same
-unless defineded otherwise:
-
-
-```json
-{
-  "int": "http://typed-json.org/#integer",
-  "point": { "x": "int", "y": "int" },
-  "square": { "3": "point" }
-}
-```
-
-Above definition of `square` is identical to:
+New primitives can be defined by aliasing existing primitive types
+and adding some additional metadata. For example type `digit` can
+be defined as:
 
 ```json
 {
-  "int": "http://typed-json.org/#integer",
-  "point": { "x": "int", "y": "int" },
-  "square": {
-    "0": "point",
-    "1": "point",
-    "2": "point",
-    "3": "point"
+  "digit": "http://typed-json.org/#int",
+  "digit:meta": {
+    "min": 0,
+    "max": 9
   }
 }
-```
 
-Different types can also be mixed in long tuples as simple
-as:
+Note that above definition uses "digit:meta" key to define metadata
+for the `digit` type. Metadata keys must be mapped to an objects who's
+fields are not specified by this format. Different environments may
+choose to support metadata fields, for example `digit` type metadata
+specifies range of ints, but if runtime does not supports ranges it
+will still treat `digit` as `int` type.
 
+## Constants
+
+Specification recognizes constants of `string`, `integer`, `float`
+and `boolean` types:
 
 ```json
 {
-  "int": "http://typed-json.org/#integer",
-  "point": { "x": "int", "y": "int" },
-  "find-better-example": {
-    "4": "point",
-    "6": "int",
-    "8": "point"
-  }
+  "readyStatus": 1,
+  "readyState": "'complete'",
+  "yes": "true",
 }
 ```
 
-Above defitinion of `find-better-example` type defines array
-structure of `9` elements where `0` to `4` indexed elements
-are of `point` type, `5` to `6` integers and `7` to `8` are
-of `point` types.
+Above data structure defines type `readyStatus` constant of `int`
+type that will only match `1`. Type `yes` is a boolean that is
+`true`. Type `readyState` is a constant primitive that matches
+`"complete"` string in JSON although in some languages that could
+translate to more appropriate contant values like [keywords][]
+in clojure.
 
 
 ## Union types
 
-## Constants
+Composite types can also be defined in form of [union types][] to
+allow structures that can contain either of listed types:
 
-Constants can be used to define types for the specific values
-that can be reused in union types for example:
+```json
+{
+  "string": "http://typed-json.org/#string",
+  "pending": {"pending":"true"},
+  "complete": {"data": "string"}
+  "status": "pending|complete"
+}
+```
+
+
+Unions can be defined over constant types as well:
 
 
 ```json
 {
-  "int": "http://typed-json.org/#string",
   "yes": "'yes'",
   "no": "'no'",
-  "is-ready": "yes|no"
+  "show": "yes|no"
+}
 ```
+
+There is also syntax sugar to express above in more
+consise way:
+
+```json
+{
+  "show": "'yes'|'no'"
+}
+```
+
+*Note: Union types support syntax sugar over string type constants
+all others have to be defined as types explicitly*
+
+```json
+{
+  "two": 2,
+  "three": 3,
+  "five": 5,
+  "seven": 7,
+  "primedigits": "two|three|five|seven"
+}
+```
+
 
 # Prior art:
 
@@ -259,3 +306,5 @@ that can be reused in union types for example:
 
 [JSON]:http://json.org/
 [structural typing]:http://en.wikipedia.org/wiki/Structural_type_system
+[keywords]:http://clojure.org/data_structures#Data%20Structures-Keywords
+[Union_types]:https://en.wikipedia.org/wiki/Union_type
