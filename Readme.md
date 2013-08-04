@@ -19,7 +19,7 @@ typegraph file as follows:
 
 ```json
 {
-  "null": "http://typograph.io/#null"
+  "null": "http://typed-json.org/#null"
 }
 ```
 
@@ -29,7 +29,7 @@ fine*
 
 
 Since `null` is valid JSON primitive it can be referenced in type definitions
-as `null` which will be equivalent of `http://typograph.io/#null`.
+as `null` which will be equivalent of `http://typed-json.org/#null`.
 
 
 ### boolean
@@ -39,7 +39,7 @@ a local typegraph file as:
 
 ```json
 {
-  "bool": "http://typograph.io/#boolean"
+  "bool": "http://typed-json.org/#boolean"
 }
 ```
 
@@ -48,7 +48,7 @@ a local typegraph file as:
 
 ```json
 {
-  "int": "http://typograph.io/#integer"
+  "int": "http://typed-json.org/#integer"
 }
 ```
 
@@ -56,7 +56,7 @@ a local typegraph file as:
 
 ```json
 {
-  "float": "http://typograph.io/#float"
+  "float": "http://typed-json.org/#float"
 }
 ```
 
@@ -64,7 +64,7 @@ a local typegraph file as:
 
 ```json
 {
-  "string": "http://typograph.io/#string"
+  "string": "http://typed-json.org/#string"
 }
 ```
 
@@ -82,8 +82,8 @@ by providing signiture of it's fields:
 ```json
 {
   "point": {
-    "x": "http://typograph.io/#integer",
-    "y": "http://typograph.io/#integer"
+    "x": "http://typed-json.org/#integer",
+    "y": "http://typed-json.org/#integer"
   }
 }
 ```
@@ -95,7 +95,7 @@ used, but same could have being expressed by aliasing integer type:
 
 ```json
 {
-  "int": "http://typograph.io/#integer",
+  "int": "http://typed-json.org/#integer",
   "point": { "x": "int", "y": "int" }
 }
 ```
@@ -104,7 +104,7 @@ More complex structures could be defined by reusing types defined earlier:
 
 ```json
 {
-  "int": "http://typograph.io/#integer",
+  "int": "http://typed-json.org/#integer",
   "point": { "x": "int", "y": "int" },
   "line": {
     "color": "string",
@@ -121,7 +121,7 @@ types like lists for example) are expressed as follows:
 
 ```json
 {
-  "int": "http://typograph.io/#integer",
+  "int": "http://typed-json.org/#integer",
   "graph": ["int"]
 }
 ```
@@ -131,7 +131,7 @@ Composite types can be used to compose new collection types:
 
 ```json
 {
-  "int": "http://typograph.io/#integer",
+  "int": "http://typed-json.org/#integer",
   "point": { "x": "int", "y": "int" },
   "shape": ["point"]
 }
@@ -144,7 +144,7 @@ via arrays in JSON. They can be defined as follows:
 
 ```json
 {
-  "int": "http://typograph.io/#integer",
+  "int": "http://typed-json.org/#integer",
   "point": { "x": "int", "y": "int" },
   "line": { "0": "point", "1": "point" }
 }
@@ -160,8 +160,8 @@ Tupeles can also hold different types of values:
 
 ```json
 {
-  "int": "http://typograph.io/#integer",
-  "string": "http://typograph.io/#string",
+  "int": "http://typed-json.org/#integer",
+  "string": "http://typed-json.org/#string",
   "color": "string",
   "point": { "x": "int", "y": "int" },
   "pixel": {
@@ -191,7 +191,7 @@ unless defineded otherwise:
 
 ```json
 {
-  "int": "http://typograph.io/#integer",
+  "int": "http://typed-json.org/#integer",
   "point": { "x": "int", "y": "int" },
   "square": { "3": "point" }
 }
@@ -201,7 +201,7 @@ Above definition of `square` is identical to:
 
 ```json
 {
-  "int": "http://typograph.io/#integer",
+  "int": "http://typed-json.org/#integer",
   "point": { "x": "int", "y": "int" },
   "square": {
     "0": "point",
@@ -218,7 +218,7 @@ as:
 
 ```json
 {
-  "int": "http://typograph.io/#integer",
+  "int": "http://typed-json.org/#integer",
   "point": { "x": "int", "y": "int" },
   "find-better-example": {
     "4": "point",
@@ -244,10 +244,10 @@ that can be reused in union types for example:
 
 ```json
 {
-  "int": "http://typograph.io/#string",
-  "true": [[true]],
-  "false": [[false]],
-  "bool": "true|false"
+  "int": "http://typed-json.org/#string",
+  "yes": "'yes'",
+  "no": "'no'",
+  "is-ready": "yes|no"
 ```
 
 # Prior art:
