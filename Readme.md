@@ -1,8 +1,8 @@
-# Typograph
+# Typed JSON
 
-Typograph is a JSON based format for defining structured JSON data, that
-can be used by language type systems or contract / guard librarires to
-do guarantees about type safety.
+Typed JSON is a format for defining structured [JSON][] data, that
+can be used by language type systems or contract / guard librarires
+to do some type safety guarantees.
 
 ## Format
 
