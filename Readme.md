@@ -258,7 +258,7 @@ allow structures that can contain either of listed types:
 {
   "string": "http://typed-json.org/#string",
   "pending": { "pending": true },
-  "complete": { "data": "string" }
+  "complete": { "data": "string" },
   "status": "pending|complete"
 }
 ```
