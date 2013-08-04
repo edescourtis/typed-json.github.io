@@ -13,15 +13,15 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <title>Typed-json by typed-json</title>
+    <title>Typed JSON by typed-json</title>
   </head>
 
   <body>
     <header>
       <div class="inner">
-        <h1>Typed-json</h1>
+        <h1>Typed JSON</h1>
         <h2>Format for defining structured JSON data</h2>
-        <a href="https://github.com/typed-json/typed-json" class="button"><small>View project on</small>GitHub</a>
+        <a href="https://github.com/typed-json" class="button"><small>Follow me on</small>GitHub</a>
       </div>
     </header>
 
@@ -50,7 +50,7 @@ a specific URIs. This specification definese set of following primitive types:</
 typegraph file as follows:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"null"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#null"</span>
+  <span class="nt">"null"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#null"</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -59,7 +59,7 @@ type in the rest of the graph, but any different identifier would work just
 fine</em></p>
 
 <p>Since <code>null</code> is valid JSON primitive it can be referenced in type definitions
-as <code>null</code> which will be equivalent of <code>http://typograph.io/#null</code>.</p>
+as <code>null</code> which will be equivalent of <code>http://typed-json.org/#null</code>.</p>
 
 <h3>
 <a name="boolean" class="anchor" href="#boolean"><span class="octicon octicon-link"></span></a>boolean</h3>
@@ -68,7 +68,7 @@ as <code>null</code> which will be equivalent of <code>http://typograph.io/#null
 a local typegraph file as:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"bool"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#boolean"</span>
+  <span class="nt">"bool"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#boolean"</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -76,7 +76,7 @@ a local typegraph file as:</p>
 <a name="integer" class="anchor" href="#integer"><span class="octicon octicon-link"></span></a>integer</h3>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -84,7 +84,7 @@ a local typegraph file as:</p>
 <a name="float" class="anchor" href="#float"><span class="octicon octicon-link"></span></a>float</h3>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"float"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#float"</span>
+  <span class="nt">"float"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#float"</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -92,7 +92,7 @@ a local typegraph file as:</p>
 <a name="string" class="anchor" href="#string"><span class="octicon octicon-link"></span></a>string</h3>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#string"</span>
+  <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#string"</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -110,8 +110,8 @@ by providing signiture of it's fields:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
-    <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span>
+    <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span><span class="p">,</span>
+    <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -121,7 +121,7 @@ with an integer values. In this example actual integer type identifiers were
 used, but same could have being expressed by aliasing integer type:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span><span class="p">,</span>
   <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -129,7 +129,7 @@ used, but same could have being expressed by aliasing integer type:</p>
 <p>More complex structures could be defined by reusing types defined earlier:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span><span class="p">,</span>
   <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
   <span class="nt">"line"</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">"color"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span>
@@ -146,7 +146,7 @@ used, but same could have being expressed by aliasing integer type:</p>
 types like lists for example) are expressed as follows:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span><span class="p">,</span>
   <span class="nt">"graph"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"int"</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
@@ -154,7 +154,7 @@ types like lists for example) are expressed as follows:</p>
 <p>Composite types can be used to compose new collection types:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span><span class="p">,</span>
   <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
   <span class="nt">"shape"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"point"</span><span class="p">]</span>
 <span class="p">}</span>
@@ -167,7 +167,7 @@ types like lists for example) are expressed as follows:</p>
 via arrays in JSON. They can be defined as follows:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span><span class="p">,</span>
   <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
   <span class="nt">"line"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"0"</span><span class="p">:</span> <span class="s2">"point"</span><span class="p">,</span> <span class="nt">"1"</span><span class="p">:</span> <span class="s2">"point"</span> <span class="p">}</span>
 <span class="p">}</span>
@@ -181,8 +181,8 @@ via arrays in JSON. They can be defined as follows:</p>
 <p>Tupeles can also hold different types of values:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
-  <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#string"</span><span class="p">,</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span><span class="p">,</span>
+  <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#string"</span><span class="p">,</span>
   <span class="nt">"color"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span>
   <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
   <span class="nt">"pixel"</span><span class="p">:</span> <span class="p">{</span>
@@ -208,7 +208,7 @@ as definition implies that type of the lower indexed elements is same
 unless defineded otherwise:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span><span class="p">,</span>
   <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
   <span class="nt">"square"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"3"</span><span class="p">:</span> <span class="s2">"point"</span> <span class="p">}</span>
 <span class="p">}</span>
@@ -217,7 +217,7 @@ unless defineded otherwise:</p>
 <p>Above definition of <code>square</code> is identical to:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span><span class="p">,</span>
   <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
   <span class="nt">"square"</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">"0"</span><span class="p">:</span> <span class="s2">"point"</span><span class="p">,</span>
@@ -232,7 +232,7 @@ unless defineded otherwise:</p>
 as:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#integer"</span><span class="p">,</span>
   <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
   <span class="nt">"find-better-example"</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">"4"</span><span class="p">:</span> <span class="s2">"point"</span><span class="p">,</span>
@@ -257,10 +257,10 @@ of <code>point</code> types.</p>
 that can be reused in union types for example:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#string"</span><span class="p">,</span>
-  <span class="nt">"true"</span><span class="p">:</span> <span class="p">[[</span><span class="kc">true</span><span class="p">]],</span>
-  <span class="nt">"false"</span><span class="p">:</span> <span class="p">[[</span><span class="kc">false</span><span class="p">]],</span>
-  <span class="nt">"bool"</span><span class="p">:</span> <span class="s2">"true|false"</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#string"</span><span class="p">,</span>
+  <span class="nt">"yes"</span><span class="p">:</span> <span class="s2">"'yes'"</span><span class="p">,</span>
+  <span class="nt">"no"</span><span class="p">:</span> <span class="s2">"'no'"</span><span class="p">,</span>
+  <span class="nt">"is-ready"</span><span class="p">:</span> <span class="s2">"yes|no"</span>
 </pre></div>
 
 <h1>
@@ -275,16 +275,7 @@ that can be reused in union types for example:</p>
         </section>
 
         <aside id="sidebar">
-          <a href="https://github.com/typed-json/typed-json/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/typed-json/typed-json/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
 
-          <p class="repo-owner"><a href="https://github.com/typed-json/typed-json"></a> is maintained by <a href="https://github.com/typed-json">typed-json</a>.</p>
 
           <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
         </aside>
