@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Typed-json by typed-json</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Typed-json</h1>
+        <h2>Format for defining structured JSON data</h2>
+        <a href="https://github.com/typed-json/typed-json" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="typed-json" class="anchor" href="#typed-json"><span class="octicon octicon-link"></span></a>Typed JSON</h1>
+
+<p>Typed JSON is a format for defining structured <a href="http://json.org/">JSON</a> data, that
+can be used by language type systems or contract / guard librarires
+to do some type safety guarantees.</p>
+
+<h2>
+<a name="format" class="anchor" href="#format"><span class="octicon octicon-link"></span></a>Format</h2>
+
+<p>Every type is associtade with a unique URI. While it's recommended to have
+type definition under that URI it's not a requirement, but rather a unique
+identifier for the given type. All primitive types are also associated with
+a specific URIs. This specification definese set of following primitive types:</p>
+
+<h3>
+<a name="null" class="anchor" href="#null"><span class="octicon octicon-link"></span></a>null</h3>
+
+<p>Primitive type representing absense of value. It can be aliased in a local
+typegraph file as follows:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"null"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#null"</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><em>Note: <code>"null"</code> is just an identifier that will be used to refer to <code>null</code>
+type in the rest of the graph, but any different identifier would work just
+fine</em></p>
+
+<p>Since <code>null</code> is valid JSON primitive it can be referenced in type definitions
+as <code>null</code> which will be equivalent of <code>http://typograph.io/#null</code>.</p>
+
+<h3>
+<a name="boolean" class="anchor" href="#boolean"><span class="octicon octicon-link"></span></a>boolean</h3>
+
+<p>Boolean type that can be either <code>true</code> or <code>false</code>. Booleans can be aliased in
+a local typegraph file as:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"bool"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#boolean"</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="integer" class="anchor" href="#integer"><span class="octicon octicon-link"></span></a>integer</h3>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="float" class="anchor" href="#float"><span class="octicon octicon-link"></span></a>float</h3>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"float"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#float"</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="string" class="anchor" href="#string"><span class="octicon octicon-link"></span></a>string</h3>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#string"</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="composite-types" class="anchor" href="#composite-types"><span class="octicon octicon-link"></span></a>Composite types</h2>
+
+<p>Main use of typograph is for defining composite type structures. There are
+few type structures that can be expressed:</p>
+
+<h3>
+<a name="records" class="anchor" href="#records"><span class="octicon octicon-link"></span></a>Records</h3>
+
+<p>Record types represent JSON objects with a specific structure. They are defined
+by providing signiture of it's fields:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+    <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Above typograph defines <code>point</code> type that <strong>Must</strong> have <code>x</code> and <code>y</code> fields
+with an integer values. In this example actual integer type identifiers were
+used, but same could have being expressed by aliasing integer type:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>More complex structures could be defined by reusing types defined earlier:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
+  <span class="nt">"line"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"color"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span>
+    <span class="nt">"start"</span><span class="p">:</span> <span class="s2">"point"</span><span class="p">,</span>
+    <span class="nt">"end"</span><span class="p">:</span> <span class="s2">"point"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="collections" class="anchor" href="#collections"><span class="octicon octicon-link"></span></a>Collections</h3>
+
+<p>Collections like arrays (different languages could use different collection
+types like lists for example) are expressed as follows:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"graph"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"int"</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Composite types can be used to compose new collection types:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
+  <span class="nt">"shape"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"point"</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="tuples" class="anchor" href="#tuples"><span class="octicon octicon-link"></span></a>Tuples</h3>
+
+<p>Tuples are just a records with indexed fields that are represented
+via arrays in JSON. They can be defined as follows:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
+  <span class="nt">"line"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"0"</span><span class="p">:</span> <span class="s2">"point"</span><span class="p">,</span> <span class="nt">"1"</span><span class="p">:</span> <span class="s2">"point"</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Above defined <code>line</code> type defines structure for values like:</p>
+
+<div class="highlight"><pre><span class="p">[{</span><span class="nx">x</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">10</span><span class="p">}]</span>
+</pre></div>
+
+<p>Tupeles can also hold different types of values:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#string"</span><span class="p">,</span>
+  <span class="nt">"color"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span>
+  <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
+  <span class="nt">"pixel"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"0"</span><span class="p">:</span> <span class="s2">"point"</span><span class="p">,</span>
+    <span class="nt">"1"</span><span class="p">:</span> <span class="s2">"color"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Above defined <code>pixel</code> type defines structure for values like:</p>
+
+<div class="highlight"><pre><span class="p">[{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span><span class="mi">0</span><span class="p">},</span> <span class="s2">"red"</span><span class="p">]</span>
+</pre></div>
+
+<p><em>Note: That "color" is just an alias for a string with a different
+semantic meaning. It's useful to give semantic meaning to an entities
+used in type definitions, that allows changing types of those entities
+independently from computed types</em></p>
+
+<p>Tuples also be used for defining types for fixed size collections. Note
+that there's no need to define types for each individual index on a tuple
+as definition implies that type of the lower indexed elements is same
+unless defineded otherwise:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
+  <span class="nt">"square"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"3"</span><span class="p">:</span> <span class="s2">"point"</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Above definition of <code>square</code> is identical to:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
+  <span class="nt">"square"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"0"</span><span class="p">:</span> <span class="s2">"point"</span><span class="p">,</span>
+    <span class="nt">"1"</span><span class="p">:</span> <span class="s2">"point"</span><span class="p">,</span>
+    <span class="nt">"2"</span><span class="p">:</span> <span class="s2">"point"</span><span class="p">,</span>
+    <span class="nt">"3"</span><span class="p">:</span> <span class="s2">"point"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Different types can also be mixed in long tuples as simple
+as:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#integer"</span><span class="p">,</span>
+  <span class="nt">"point"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"x"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span> <span class="nt">"y"</span><span class="p">:</span> <span class="s2">"int"</span> <span class="p">},</span>
+  <span class="nt">"find-better-example"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"4"</span><span class="p">:</span> <span class="s2">"point"</span><span class="p">,</span>
+    <span class="nt">"6"</span><span class="p">:</span> <span class="s2">"int"</span><span class="p">,</span>
+    <span class="nt">"8"</span><span class="p">:</span> <span class="s2">"point"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Above defitinion of <code>find-better-example</code> type defines array
+structure of <code>9</code> elements where <code>0</code> to <code>4</code> indexed elements
+are of <code>point</code> type, <code>5</code> to <code>6</code> integers and <code>7</code> to <code>8</code> are
+of <code>point</code> types.</p>
+
+<h2>
+<a name="union-types" class="anchor" href="#union-types"><span class="octicon octicon-link"></span></a>Union types</h2>
+
+<h2>
+<a name="constants" class="anchor" href="#constants"><span class="octicon octicon-link"></span></a>Constants</h2>
+
+<p>Constants can be used to define types for the specific values
+that can be reused in union types for example:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typograph.io/#string"</span><span class="p">,</span>
+  <span class="nt">"true"</span><span class="p">:</span> <span class="p">[[</span><span class="kc">true</span><span class="p">]],</span>
+  <span class="nt">"false"</span><span class="p">:</span> <span class="p">[[</span><span class="kc">false</span><span class="p">]],</span>
+  <span class="nt">"bool"</span><span class="p">:</span> <span class="s2">"true|false"</span>
+</pre></div>
+
+<h1>
+<a name="prior-art" class="anchor" href="#prior-art"><span class="octicon octicon-link"></span></a>Prior art:</h1>
+
+<ul>
+<li><a href="http://elm-lang.org/learn/Records.elm">Elm records</a></li>
+<li><a href="http://bsonspec.org/">MongoDB BSON</a></li>
+<li><a href="http://json-schema.org/">JSON Schema</a></li>
+<li><a href="https://developers.google.com/protocol-buffers/docs/overview">Protocol buffers</a></li>
+</ul>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/typed-json/typed-json/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/typed-json/typed-json/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/typed-json/typed-json"></a> is maintained by <a href="https://github.com/typed-json">typed-json</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-42944832-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
