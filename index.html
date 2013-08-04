@@ -183,7 +183,7 @@ collection of <code>point</code> type items of arbitrary number</em></p>
 
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#int"</span><span class="p">,</span>
-  <span class="nt">"point"</span><span class="p">:</span> <span class="p">[</span><span class="err">int</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+  <span class="nt">"point"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"int"</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
   <span class="s2">"line"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"point"</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
@@ -256,7 +256,7 @@ and <code>boolean</code> types:</p>
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">"readyStatus"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
   <span class="nt">"readyState"</span><span class="p">:</span> <span class="s2">"'complete'"</span><span class="p">,</span>
-  <span class="nt">"yes"</span><span class="p">:</span> <span class="s2">"true"</span><span class="p">,</span>
+  <span class="nt">"yes"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -275,8 +275,8 @@ allow structures that can contain either of listed types:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#string"</span><span class="p">,</span>
-  <span class="nt">"pending"</span><span class="p">:</span> <span class="p">{</span><span class="nt">"pending"</span><span class="p">:</span><span class="s2">"true"</span><span class="p">},</span>
-  <span class="nt">"complete"</span><span class="p">:</span> <span class="p">{</span><span class="nt">"data"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}</span>
+  <span class="nt">"pending"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"pending"</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+  <span class="nt">"complete"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"data"</span><span class="p">:</span> <span class="s2">"string"</span> <span class="p">}</span>
   <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"pending|complete"</span>
 <span class="p">}</span>
 </pre></div>
