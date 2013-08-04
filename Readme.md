@@ -162,7 +162,7 @@ It is also possible to define fixed size collections:
 ```json
 {
   "int": "http://typed-json.org/#int",
-  "point": ["int", 2]
+  "point": ["int", 2],
   "line": ["point", 2]
 }
 ```
