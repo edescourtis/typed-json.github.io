@@ -6,7 +6,7 @@ to do some type safety guarantees.
 
 ## Format
 
-Every type is associtade with a unique URI. It is recommended to have a type
+Every type is associated with a unique URI. It is recommended to have a type
 definition under that URI, but it is not a requirement, it is up to implementor
 to associate actual definitions with a URI, in other words type URIs are just
 a unique identifiers for types.
@@ -78,7 +78,7 @@ Float type can be aliased as `float` as follows:
 
 ### String
 
-String type can be aliased as `float` as follows:
+String type can be aliased as `string` as follows:
 
 ```json
 {
@@ -106,7 +106,7 @@ defined in terms of field type signatures:
 }
 ```
 
-Above JSON defines `point` type that **Must** have `x` and `y` fields
+Above JSON defines `point` type that **must** have `x` and `y` fields
 of `int` type. This example uses full URIs to for field type definitions,
 but that's redundant and could be expressed in more eloquent manner:
 
@@ -133,8 +133,8 @@ Composite data type definitions can refer to other composite types:
 
 ### Collections
 
-Collections like arrays (different languages could use different collection
-types, lists for example) must contain items of certain type(s) and are defined
+Collections, like arrays (different languages could use different collection
+types, lists for example), must contain items of specified type and are defined
 as follows:
 
 ```json
@@ -145,10 +145,10 @@ as follows:
 }
 ```
 
-*Note: Above example above defines `shape` type that is
-collection of `point` type items of arbitrary number*
+*Note: The example above defines a `shape` type that is a
+collection of an arbitrary number of `point` items*
 
-Following JSON data would match `shape` type:
+The following JSON data would conform to the `shape` type:
 
 ```js
 [{"x":0, "y":0}]
@@ -156,7 +156,7 @@ Following JSON data would match `shape` type:
 [{"x":0, "y":0}, {"x": 0, "y": 10}, {"x": 10: "y": 10}]
 ```
 
-It is also possible to define fixed size collections:
+It is also possible to define fixed-size collections:
 
 
 ```json
@@ -167,7 +167,7 @@ It is also possible to define fixed size collections:
 }
 ```
 
-Following JSON data would match `line` type definition:
+The following JSON data would conform to the `line` type:
 
 ```js
 [[0,0], [0,10]]
@@ -176,9 +176,9 @@ Following JSON data would match `line` type definition:
 
 ### Tuples
 
-Tuples are fixed size JS arrays, in contrast to regular fixed
-size arrays they define element types by index and there for
-are preferable for defining mixed type arrays:
+Tuples are fixed size JS arrays. In contrast to regular fixed
+size arrays, they define element types by index and therefore
+are preferable for defining mixed-type arrays:
 
 ```json
 {
@@ -193,16 +193,16 @@ are preferable for defining mixed type arrays:
 }
 ```
 
-Above defined `pixel` type defines structure for values like:
+The above `pixel` type defines a structure for values like:
 
 ```js
 [{x:0, y:0}, "red"]
 [{x:0, y:12}, "green"]
 ````
 
-*Note: That "color" is just an alias for a string with a different
-semantic meaning. It's useful to give semantic meaning to an entities
-used in type definitions, that allows changing types of those entities
+*Note: "color" is just an alias for a string with a different
+semantic meaning. It's useful to give semantic meaning to entities
+used in type definitions, as it allows changing the types of those entities
 independently from computed types*
 
 ## Metadata
@@ -222,10 +222,10 @@ be defined as:
 ```
 
 Note that above definition uses "digit:meta" key to define metadata
-for the `digit` type. Metadata keys must be mapped to an objects who's
+for the `digit` type. Metadata keys must be mapped to objects whose
 fields are not specified by this format. Different environments may
-choose to support metadata fields, for example `digit` type metadata
-specifies range of ints, but if runtime does not supports ranges it
+choose to support metadata fields. For example, the `digit` type's metadata
+specifies range of ints, but if runtime does not support ranges, it
 will still treat `digit` as `int` type.
 
 ## Constants
@@ -244,7 +244,7 @@ and `boolean` types:
 Above data structure defines type `readyStatus` constant of `int`
 type that will only match `1`. Type `yes` is a boolean that is
 `true`. Type `readyState` is a constant primitive that matches
-`"complete"` string in JSON although in some languages that could
+`'complete'` string in JSON although in some languages that could
 translate to more appropriate contant values like [keywords][]
 in clojure.
 
