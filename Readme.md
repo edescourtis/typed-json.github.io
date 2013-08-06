@@ -21,11 +21,11 @@ languages. Each primitive type is associated with specific URIs.
 
 ```json
 {
-  "bool"  : "http://typed-json.org/#boolean"
-  "int"   : "http://typed-json.org/#int"
-  "float" : "http://typed-json.org/#float"
-  "string": "http://typed-json.org/#string"
-  "null"  : "http://typed-json.org/#Null"
+  "bool"  : "http://typed-json.org/#boolean",
+  "int"   : "http://typed-json.org/#int",
+  "float" : "http://typed-json.org/#float",
+  "string": "http://typed-json.org/#string",
+  "null"  : "http://typed-json.org/#null"
 }
 ```
 
