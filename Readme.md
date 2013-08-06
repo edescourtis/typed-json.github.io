@@ -10,9 +10,10 @@ to decrease the burden of validating and using data.
 
 Typed JSON supports:
 
-* Primitive types
-* Basic data structures (arrays, records, tuples)
-* Union types (which can express Algebraic Data Types and sub-types)
+* Primitive types: int, float, etc.
+* Basic data structures: collections, records, and tuples
+* Constants: values such as `4` and `true`
+* Union types: which can express Algebraic Data Types and sub-types
 
 Every type is associated with a unique URI. This can be used simply as
 a unique identifier, or it can be associated with a type definition.
