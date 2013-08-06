@@ -1,6 +1,6 @@
 # Typed JSON
 
-Typed JSON is a format for defining structured [JSON][http://www.json.org/]
+Typed JSON is a format for defining structured [JSON][]
 data, that can be used by type systems or contract / guard librarires
 to allow cross-language type-safety guarantees.
 
@@ -229,25 +229,26 @@ allow structures that can contain non-homogeneous types:
 ```json
 {
   "string": "http://typed-json.org/#string",
-  "string": "http://typed-json.org/#int",
-  "pending": { "pending": "int" },
+  "pending": true,
   "complete": { "data": "string" },
   "status": "pending|complete"
 }
 ```
 
-This is very natural in untyped languages like JavaScript, but it also maps nicely onto [Algebraic Data Types](http://elm-lang.org/learn/Pattern-Matching.elm) (ADT) in functional languages like Elm and Haskell. It also maps onto subclasses in OO languages like Java.
+This is very natural in untyped languages like JavaScript, but it
+also maps nicely onto [Algebraic Data Types][] (ADTs) in functional
+languages like Elm and Haskell. It also maps onto subclasses in OO
+languages like Java.
 
 In Haskell, the `"status"` type would be represented as:
 
 ```haskell
-data Status = Pending { pending :: Int }
-            | Complete { data :: String }
+data Status = Pending | Complete { data :: String }
 ```
 
 ## Unions with Constant Types
 
-Unions can be defined over constant types as well:
+As we saw above, unions can be defined over constant types:
 
 ```json
 {
@@ -257,16 +258,18 @@ Unions can be defined over constant types as well:
 }
 ```
 
-In JavaScript, the values passed along would be a string `'yes'` or `'no'`. A statically-typed functional language like Elm or Haskell would represent this as:
+In JavaScript, the values passed along would be a string `'yes'` or
+`'no'`. A statically-typed functional language like Elm or Haskell
+would represent this as:
 
 ```haskell
 data Show = Yes | No
 ```
 
-It is guaranteed that members of a union type are named, so it is always safe to map onto an ADT.
+It is guaranteed that members of a union type are named, so it is
+always safe to map onto an ADT or class heirarchy.
 
-There is also syntax sugar to express above in more
-concise way:
+There is also syntax sugar to express above in more concise way:
 
 ```json
 {
@@ -308,3 +311,4 @@ This lets you work with the colloquial representation in very different language
 [structural typing]:http://en.wikipedia.org/wiki/Structural_type_system
 [keywords]:http://clojure.org/data_structures#Data%20Structures-Keywords
 [Union_types]:https://en.wikipedia.org/wiki/Union_type
+[algebraic_data_types]:http://elm-lang.org/learn/Pattern-Matching.elm
