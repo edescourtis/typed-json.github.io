@@ -252,20 +252,30 @@ in clojure.
 ## Union types
 
 Composite types can also be defined in form of [union types][] to
-allow structures that can contain either of listed types:
+allow structures that can contain non-homogeneous types:
 
 ```json
 {
   "string": "http://typed-json.org/#string",
-  "pending": { "pending": true },
+  "string": "http://typed-json.org/#int",
+  "pending": { "pending": "int" },
   "complete": { "data": "string" },
   "status": "pending|complete"
 }
 ```
 
+This is very natural in untyped languages like JavaScript, but it also maps nicely onto [Algebraic Data Types](http://elm-lang.org/learn/Pattern-Matching.elm) (ADT) in functional languages like Elm and Haskell. It also maps onto subclasses in OO languages like Java.
+
+In Haskell, the `"status"` type would be represented as:
+
+```haskell
+data Status = Pending { pending :: Int }
+            | Complete { data :: String }
+```
+
+## Unions with Constant Types
 
 Unions can be defined over constant types as well:
-
 
 ```json
 {
@@ -275,8 +285,16 @@ Unions can be defined over constant types as well:
 }
 ```
 
+In JavaScript, the values passed along would be a string `'yes'` or `'no'`. A statically-typed functional language like Elm or Haskell would represent this as:
+
+```haskell
+data Show = Yes | No
+```
+
+It is guaranteed that members of a union type are named, so it is always safe to map onto an ADT.
+
 There is also syntax sugar to express above in more
-consise way:
+concise way:
 
 ```json
 {
@@ -284,8 +302,9 @@ consise way:
 }
 ```
 
-*Note: Union types support syntax sugar over string type constants
-all others have to be defined as types explicitly*
+This is allowed because string literals have names. It is still possible to map onto ADTs.
+
+Therefore, this syntactic sugar is not permitted for other type literals. Literal integers and floats must be defined explicitly to ensure there is a name.
 
 ```json
 {
@@ -293,10 +312,17 @@ all others have to be defined as types explicitly*
   "three": 3,
   "five": 5,
   "seven": 7,
-  "primedigits": "two|three|five|seven"
+  "prime-digits": "two|three|five|seven"
 }
 ```
 
+In JavaScript, this would just send an integer along the wire. In Haskell or Elm, this would be represented as:
+
+```haskell
+data PrimeDigits = Two | Three | Five | Seven
+```
+
+This lets you get the colloquial representation in very different languages.
 
 # Prior art:
 
