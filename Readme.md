@@ -269,9 +269,9 @@ concise way:
 }
 ```
 
-This is allowed because string literals have names. It is still possible to map onto ADTs.
-
-Therefore, this syntactic sugar is not permitted for other type literals. Literal integers and floats must be defined explicitly to ensure there is a name.
+It is still possible to map this onto ADTs because strings implicitly have names.
+Unlike strings, constant integers and floats must be defined explicitly to ensure
+they have a name.
 
 ```json
 {
@@ -283,13 +283,14 @@ Therefore, this syntactic sugar is not permitted for other type literals. Litera
 }
 ```
 
-In JavaScript, this would just send an integer along the wire. In Haskell or Elm, this would be represented as:
+In JavaScript, this would just send an integer over the wire.
+In Haskell or Elm, this would be represented as:
 
 ```haskell
 data PrimeDigits = Two | Three | Five | Seven
 ```
 
-This lets you get the colloquial representation in very different languages.
+This lets you work with the colloquial representation in very different languages.
 
 # Prior art:
 
