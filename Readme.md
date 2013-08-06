@@ -1,101 +1,58 @@
 # Typed JSON
 
-Typed JSON is a format for defining structured [JSON][] data, that
-can be used by language type systems or contract / guard librarires
-to do some type safety guarantees.
+Typed JSON is a format for defining structured [JSON][http://www.json.org/]
+data, that can be used by type systems or contract / guard librarires
+to allow cross-language type-safety guarantees.
 
-## Format
+Typed JSON supports:
 
-Every type is associated with a unique URI. It is recommended to have a type
-definition under that URI, but it is not a requirement, it is up to implementor
-to associate actual definitions with a URI, in other words type URIs are just
-a unique identifiers for types.
+* Primitive types
+* Basic data structures (arrays, records, tuples)
+* Union types (which can express Algebraic Data Types and sub-types)
 
-Format defines some base primitive types that are also associated with specific
-URIs. This specification recognizes following primitive types:
+Every type is associated with a unique URI. This can be used simply as
+a unique identifier, or it can be associated with a type definition.
 
-### Null
 
-Primitive type representing an absense of value. In the type vocabulary they
-can be referenced either by URI or aliased as a local type and referced by
-alias name:
+## Primitive Types
 
+Typed JSON defines base primitive types that are common to almost all
+languages. Each primitive type is associated with specific URIs.
 
 ```json
 {
-  "null": "http://typed-json.org/#Null"
+  "bool"  : "http://typed-json.org/#boolean"
+  "int"   : "http://typed-json.org/#int"
+  "float" : "http://typed-json.org/#float"
+  "string": "http://typed-json.org/#string"
+  "null"  : "http://typed-json.org/#Null"
 }
 ```
 
-*Note: Above definition defines `"null"` just as an alias to primitive
-http://typed-json.org/#null type, so that rest of the type vocabulary
-would be able to refer to it by that identifier.*
+Primitive types can be referenced by their URI or aliased as a local type.
+In the example above, we created a local type alias for all of our primitive
+types. These aliases can be used later to make more complex types easier to read.
 
+The `null` primitive type represents the absense of value. It is actually
+a type of its own, not a possible value for all objects.
 
 Since `null` is valid JSON primitive it can be used instead of URI
 http://typed-json.org/#null. For example type `empty` can be defined
-as an alias to http://typed-json.org/#null as follows:
+as an alias to http://typed-json.org/#null as follows: `{ "empty": null }`
 
-```json
-{
-  "empty": null
-}
-```
-
-
-### Boolean
-
-Boolean type can be aliased as `bool` as follows:
-
-```json
-{
-  "bool": "http://typed-json.org/#boolean"
-}
-```
-
-
-### Int
-
-Ints type can be aliased as `int` as follows:
-
-```json
-{
-  "int": "http://typed-json.org/#int"
-}
-```
-
-*Note: int is JS int*
-
-### Float
-
-Float type can be aliased as `float` as follows:
-
-```json
-{
-  "float": "http://typed-json.org/#float"
-}
-```
-
-### String
-
-String type can be aliased as `string` as follows:
-
-```json
-{
-  "string": "http://typed-json.org/#string"
-}
-```
 
 ## Composite types
 
-Typed JSON is used mainly for defining composite type structures. There are
-few type structures that can be expressed:
+Typed JSON is great for defining composite types. The key composite types are:
+
+ * Records: similar to objects
+ * Collections: arrays or lists of a single type
+ * Tuples: fixed sized containers with mixed types
 
 ### Records
 
 Record types represent JSON objects with a specific structure. They are
 defined in terms of field type signatures:
-
 
 ```json
 {
@@ -133,8 +90,8 @@ Composite data type definitions can refer to other composite types:
 
 ### Collections
 
-Collections, like arrays (different languages could use different collection
-types, lists for example), must contain items of specified type and are defined
+Collections, like arrays (or lists, depending on the language),
+must contain items of specified type and are defined
 as follows:
 
 ```json
@@ -151,6 +108,7 @@ collection of an arbitrary number of `point` items*
 The following JSON data would conform to the `shape` type:
 
 ```js
+[]
 [{"x":0, "y":0}]
 [{"x":0, "y":0}, {"x": 0, "y": 10}]
 [{"x":0, "y":0}, {"x": 0, "y": 10}, {"x": 10: "y": 10}]
@@ -176,9 +134,9 @@ The following JSON data would conform to the `line` type:
 
 ### Tuples
 
-Tuples are fixed size JS arrays. In contrast to regular fixed
-size arrays, they define element types by index and therefore
-are preferable for defining mixed-type arrays:
+Tuples are fixed size containers with *mixed* types.
+In contrast to regular fixed size arrays, they define element
+types by index.
 
 ```json
 {
@@ -198,12 +156,13 @@ The above `pixel` type defines a structure for values like:
 ```js
 [{x:0, y:0}, "red"]
 [{x:0, y:12}, "green"]
-````
+```
 
 *Note: "color" is just an alias for a string with a different
 semantic meaning. It's useful to give semantic meaning to entities
 used in type definitions, as it allows changing the types of those entities
-independently from computed types*
+independently from computed types. This makes it easy to replace color with
+a record of RGB values at some point.*
 
 ## Metadata
 
@@ -248,6 +207,14 @@ type that will only match `1`. Type `yes` is a boolean that is
 translate to more appropriate contant values like [keywords][]
 in clojure.
 
+In languages like Elm and Haskell, the name of the constant type
+could be used to create a simple Algebraic Data Type:
+
+```haskell
+data ReadyStatus = ReadyStatus
+data ReadyState = ReadyState
+data Yes = Yes
+```
 
 ## Union types
 
