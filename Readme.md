@@ -4,6 +4,10 @@ Typed JSON is a format for defining structured [JSON][http://www.json.org/]
 data, that can be used by type systems or contract / guard librarires
 to allow cross-language type-safety guarantees.
 
+Typed JSON enables type information to be preserved between typed
+and untyped languages. It can be used by developer tools and compilers
+to decrease the burden of validating and using data.
+
 Typed JSON supports:
 
 * Primitive types
