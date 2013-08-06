@@ -45,7 +45,7 @@ as an alias to http://typed-json.org/#null as follows: `{ "empty": null }`
 
 Typed JSON is great for defining composite types. The key composite types are:
 
- * Records: similar to objects
+ * Records: a group of named fields, each associated with a type (similar to objects)
  * Collections: arrays or lists of a single type
  * Tuples: fixed sized containers with mixed types
 
