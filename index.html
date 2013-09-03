@@ -31,95 +31,61 @@
           <h1>
 <a name="typed-json" class="anchor" href="#typed-json"><span class="octicon octicon-link"></span></a>Typed JSON</h1>
 
-<p>Typed JSON is a format for defining structured <a href="http://json.org/">JSON</a> data, that
-can be used by language type systems or contract / guard librarires
-to do some type safety guarantees.</p>
+<p>Typed JSON is a format for defining structured <a href="http://json.org/">JSON</a>
+data, that can be used by type systems or contract / guard librarires
+to allow cross-language type-safety guarantees.</p>
+
+<p>Typed JSON enables type information to be preserved between typed
+and untyped languages. It can be used by developer tools and compilers
+to decrease the burden of validating and using data.</p>
+
+<p>Typed JSON supports:</p>
+
+<ul>
+<li>Primitive types: int, float, etc.</li>
+<li>Basic data structures: collections, records, and tuples</li>
+<li>Constants: values such as <code>4</code> and <code>true</code>
+</li>
+<li>Union types: which can express Algebraic Data Types and sub-types</li>
+</ul><p>Every type is associated with a unique URI. This can be used simply as
+a unique identifier, or it can be associated with a type definition.</p>
 
 <h2>
-<a name="format" class="anchor" href="#format"><span class="octicon octicon-link"></span></a>Format</h2>
+<a name="primitive-types" class="anchor" href="#primitive-types"><span class="octicon octicon-link"></span></a>Primitive Types</h2>
 
-<p>Every type is associtade with a unique URI. It is recommended to have a type
-definition under that URI, but it is not a requirement, it is up to implementor
-to associate actual definitions with a URI, in other words type URIs are just
-a unique identifiers for types.</p>
-
-<p>Format defines some base primitive types that are also associated with specific
-URIs. This specification recognizes following primitive types:</p>
-
-<h3>
-<a name="null" class="anchor" href="#null"><span class="octicon octicon-link"></span></a>Null</h3>
-
-<p>Primitive type representing an absense of value. In the type vocabulary they
-can be referenced either by URI or aliased as a local type and referced by
-alias name:</p>
+<p>Typed JSON defines base primitive types that are common to almost all
+languages. Each primitive type is associated with specific URIs.</p>
 
 <div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"null"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#Null"</span>
+  <span class="nt">"bool"</span>  <span class="p">:</span> <span class="s2">"http://typed-json.org/#boolean"</span><span class="p">,</span>
+  <span class="nt">"int"</span>   <span class="p">:</span> <span class="s2">"http://typed-json.org/#int"</span><span class="p">,</span>
+  <span class="nt">"float"</span> <span class="p">:</span> <span class="s2">"http://typed-json.org/#float"</span><span class="p">,</span>
+  <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#string"</span><span class="p">,</span>
+  <span class="nt">"null"</span>  <span class="p">:</span> <span class="s2">"http://typed-json.org/#null"</span>
 <span class="p">}</span>
 </pre></div>
 
-<p><em>Note: Above definition defines <code>"null"</code> just as an alias to primitive
-<a href="http://typed-json.org/#null">http://typed-json.org/#null</a> type, so that rest of the type vocabulary
-would be able to refer to it by that identifier.</em></p>
+<p>Primitive types can be referenced by their URI or aliased as a local type.
+In the example above, we created a local type alias for all of our primitive
+types. These aliases can be used later to make more complex types easier to read.</p>
+
+<p>The <code>null</code> primitive type represents the absense of value. It is actually
+a type of its own, not a possible value for all objects.</p>
 
 <p>Since <code>null</code> is valid JSON primitive it can be used instead of URI
 <a href="http://typed-json.org/#null">http://typed-json.org/#null</a>. For example type <code>empty</code> can be defined
-as an alias to <a href="http://typed-json.org/#null">http://typed-json.org/#null</a> as follows:</p>
-
-<div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"empty"</span><span class="p">:</span> <span class="kc">null</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3>
-<a name="boolean" class="anchor" href="#boolean"><span class="octicon octicon-link"></span></a>Boolean</h3>
-
-<p>Boolean type can be aliased as <code>bool</code> as follows:</p>
-
-<div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"bool"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#boolean"</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3>
-<a name="int" class="anchor" href="#int"><span class="octicon octicon-link"></span></a>Int</h3>
-
-<p>Ints type can be aliased as <code>int</code> as follows:</p>
-
-<div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#int"</span>
-<span class="p">}</span>
-</pre></div>
-
-<p><em>Note: int is JS int</em></p>
-
-<h3>
-<a name="float" class="anchor" href="#float"><span class="octicon octicon-link"></span></a>Float</h3>
-
-<p>Float type can be aliased as <code>float</code> as follows:</p>
-
-<div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"float"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#float"</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3>
-<a name="string" class="anchor" href="#string"><span class="octicon octicon-link"></span></a>String</h3>
-
-<p>String type can be aliased as <code>float</code> as follows:</p>
-
-<div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#string"</span>
-<span class="p">}</span>
-</pre></div>
+as an alias to <a href="http://typed-json.org/#null">http://typed-json.org/#null</a> as follows: <code>{ "empty": null }</code></p>
 
 <h2>
 <a name="composite-types" class="anchor" href="#composite-types"><span class="octicon octicon-link"></span></a>Composite types</h2>
 
-<p>Typed JSON is used mainly for defining composite type structures. There are
-few type structures that can be expressed:</p>
+<p>Typed JSON is great for defining composite types. The key composite types are:</p>
 
-<h3>
+<ul>
+<li>Records: a group of named fields, each associated with a type (similar to objects)</li>
+<li>Collections: arrays or lists of a single type</li>
+<li>Tuples: fixed sized containers with mixed types</li>
+</ul><h3>
 <a name="records" class="anchor" href="#records"><span class="octicon octicon-link"></span></a>Records</h3>
 
 <p>Record types represent JSON objects with a specific structure. They are
@@ -133,7 +99,7 @@ defined in terms of field type signatures:</p>
 <span class="p">}</span>
 </pre></div>
 
-<p>Above JSON defines <code>point</code> type that <strong>Must</strong> have <code>x</code> and <code>y</code> fields
+<p>Above JSON defines <code>point</code> type that <strong>must</strong> have <code>x</code> and <code>y</code> fields
 of <code>int</code> type. This example uses full URIs to for field type definitions,
 but that's redundant and could be expressed in more eloquent manner:</p>
 
@@ -158,8 +124,8 @@ but that's redundant and could be expressed in more eloquent manner:</p>
 <h3>
 <a name="collections" class="anchor" href="#collections"><span class="octicon octicon-link"></span></a>Collections</h3>
 
-<p>Collections like arrays (different languages could use different collection
-types, lists for example) must contain items of certain type(s) and are defined
+<p>Collections, like arrays (or lists, depending on the language),
+must contain items of specified type and are defined
 as follows:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
@@ -169,17 +135,18 @@ as follows:</p>
 <span class="p">}</span>
 </pre></div>
 
-<p><em>Note: Above example above defines <code>shape</code> type that is
-collection of <code>point</code> type items of arbitrary number</em></p>
+<p><em>Note: The example above defines a <code>shape</code> type that is a
+collection of an arbitrary number of <code>point</code> items</em></p>
 
-<p>Following JSON data would match <code>shape</code> type:</p>
+<p>The following JSON data would conform to the <code>shape</code> type:</p>
 
-<div class="highlight"><pre><span class="p">[{</span><span class="s2">"x"</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"y"</span><span class="o">:</span><span class="mi">0</span><span class="p">}]</span>
+<div class="highlight"><pre><span class="p">[]</span>
+<span class="p">[{</span><span class="s2">"x"</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"y"</span><span class="o">:</span><span class="mi">0</span><span class="p">}]</span>
 <span class="p">[{</span><span class="s2">"x"</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"y"</span><span class="o">:</span><span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="s2">"x"</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"y"</span><span class="o">:</span> <span class="mi">10</span><span class="p">}]</span>
 <span class="p">[{</span><span class="s2">"x"</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"y"</span><span class="o">:</span><span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="s2">"x"</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"y"</span><span class="o">:</span> <span class="mi">10</span><span class="p">},</span> <span class="p">{</span><span class="s2">"x"</span><span class="o">:</span> <span class="mi">10</span><span class="o">:</span> <span class="s2">"y"</span><span class="o">:</span> <span class="mi">10</span><span class="p">}]</span>
 </pre></div>
 
-<p>It is also possible to define fixed size collections:</p>
+<p>It is also possible to define fixed-size collections:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#int"</span><span class="p">,</span>
@@ -188,7 +155,7 @@ collection of <code>point</code> type items of arbitrary number</em></p>
 <span class="p">}</span>
 </pre></div>
 
-<p>Following JSON data would match <code>line</code> type definition:</p>
+<p>The following JSON data would conform to the <code>line</code> type:</p>
 
 <div class="highlight"><pre><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">]]</span>
 <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">]]</span>
@@ -197,9 +164,9 @@ collection of <code>point</code> type items of arbitrary number</em></p>
 <h3>
 <a name="tuples" class="anchor" href="#tuples"><span class="octicon octicon-link"></span></a>Tuples</h3>
 
-<p>Tuples are fixed size JS arrays, in contrast to regular fixed
-size arrays they define element types by index and there for
-are preferable for defining mixed type arrays:</p>
+<p>Tuples are fixed size containers with <em>mixed</em> types.
+In contrast to regular fixed size arrays, they define element
+types by index.</p>
 
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">"int"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#int"</span><span class="p">,</span>
@@ -213,16 +180,17 @@ are preferable for defining mixed type arrays:</p>
 <span class="p">}</span>
 </pre></div>
 
-<p>Above defined <code>pixel</code> type defines structure for values like:</p>
+<p>The above <code>pixel</code> type defines a structure for values like:</p>
 
 <div class="highlight"><pre><span class="p">[{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span><span class="mi">0</span><span class="p">},</span> <span class="s2">"red"</span><span class="p">]</span>
 <span class="p">[{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span><span class="mi">12</span><span class="p">},</span> <span class="s2">"green"</span><span class="p">]</span>
 </pre></div>
 
-<p><em>Note: That "color" is just an alias for a string with a different
-semantic meaning. It's useful to give semantic meaning to an entities
-used in type definitions, that allows changing types of those entities
-independently from computed types</em></p>
+<p><em>Note: "color" is just an alias for a string with a different
+semantic meaning. It's useful to give semantic meaning to entities
+used in type definitions, as it allows changing the types of those entities
+independently from computed types. This makes it easy to replace color with
+a record of RGB values at some point.</em></p>
 
 <h2>
 <a name="metadata" class="anchor" href="#metadata"><span class="octicon octicon-link"></span></a>Metadata</h2>
@@ -241,10 +209,10 @@ be defined as:</p>
 </pre></div>
 
 <p>Note that above definition uses "digit:meta" key to define metadata
-for the <code>digit</code> type. Metadata keys must be mapped to an objects who's
+for the <code>digit</code> type. Metadata keys must be mapped to objects whose
 fields are not specified by this format. Different environments may
-choose to support metadata fields, for example <code>digit</code> type metadata
-specifies range of ints, but if runtime does not supports ranges it
+choose to support metadata fields. For example, the <code>digit</code> type's metadata
+specifies range of ints, but if runtime does not support ranges, it
 will still treat <code>digit</code> as <code>int</code> type.</p>
 
 <h2>
@@ -263,25 +231,46 @@ and <code>boolean</code> types:</p>
 <p>Above data structure defines type <code>readyStatus</code> constant of <code>int</code>
 type that will only match <code>1</code>. Type <code>yes</code> is a boolean that is
 <code>true</code>. Type <code>readyState</code> is a constant primitive that matches
-<code>"complete"</code> string in JSON although in some languages that could
+<code>'complete'</code> string in JSON although in some languages that could
 translate to more appropriate contant values like <a href="http://clojure.org/data_structures#Data%20Structures-Keywords">keywords</a>
 in clojure.</p>
+
+<p>In languages like Elm and Haskell, the name of the constant type
+could be used to create a simple Algebraic Data Type:</p>
+
+<div class="highlight"><pre><span class="kr">data</span> <span class="kt">ReadyStatus</span> <span class="ow">=</span> <span class="kt">ReadyStatus</span>
+<span class="kr">data</span> <span class="kt">ReadyState</span> <span class="ow">=</span> <span class="kt">ReadyState</span>
+<span class="kr">data</span> <span class="kt">Yes</span> <span class="ow">=</span> <span class="kt">Yes</span>
+</pre></div>
 
 <h2>
 <a name="union-types" class="anchor" href="#union-types"><span class="octicon octicon-link"></span></a>Union types</h2>
 
 <p>Composite types can also be defined in form of [union types][] to
-allow structures that can contain either of listed types:</p>
+allow structures that can contain non-homogeneous types:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">"string"</span><span class="p">:</span> <span class="s2">"http://typed-json.org/#string"</span><span class="p">,</span>
-  <span class="nt">"pending"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"pending"</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>
+  <span class="nt">"pending"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="nt">"complete"</span><span class="p">:</span> <span class="p">{</span> <span class="nt">"data"</span><span class="p">:</span> <span class="s2">"string"</span> <span class="p">},</span>
   <span class="nt">"status"</span><span class="p">:</span> <span class="s2">"pending|complete"</span>
 <span class="p">}</span>
 </pre></div>
 
-<p>Unions can be defined over constant types as well:</p>
+<p>This is very natural in untyped languages like JavaScript, but it
+also maps nicely onto [Algebraic Data Types]<a href="ADTs"></a> in functional
+languages like Elm and Haskell. It also maps onto subclasses in OO
+languages like Java.</p>
+
+<p>In Haskell, the <code>"status"</code> type would be represented as:</p>
+
+<div class="highlight"><pre><span class="kr">data</span> <span class="kt">Status</span> <span class="ow">=</span> <span class="kt">Pending</span> <span class="o">|</span> <span class="kt">Complete</span> <span class="p">{</span> <span class="kr">data</span> <span class="ow">::</span> <span class="kt">String</span> <span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="unions-with-constant-types" class="anchor" href="#unions-with-constant-types"><span class="octicon octicon-link"></span></a>Unions with Constant Types</h2>
+
+<p>As we saw above, unions can be defined over constant types:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">"yes"</span><span class="p">:</span> <span class="s2">"'yes'"</span><span class="p">,</span>
@@ -290,25 +279,43 @@ allow structures that can contain either of listed types:</p>
 <span class="p">}</span>
 </pre></div>
 
-<p>There is also syntax sugar to express above in more
-consise way:</p>
+<p>In JavaScript, the values passed along would be a string <code>'yes'</code> or
+<code>'no'</code>. A statically-typed functional language like Elm or Haskell
+would represent this as:</p>
+
+<div class="highlight"><pre><span class="kr">data</span> <span class="kt">Show</span> <span class="ow">=</span> <span class="kt">Yes</span> <span class="o">|</span> <span class="kt">No</span>
+</pre></div>
+
+<p>It is guaranteed that members of a union type are named, so it is
+always safe to map onto an ADT or class heirarchy.</p>
+
+<p>There is also syntax sugar to express above in more concise way:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">"show"</span><span class="p">:</span> <span class="s2">"'yes'|'no'"</span>
 <span class="p">}</span>
 </pre></div>
 
-<p><em>Note: Union types support syntax sugar over string type constants
-all others have to be defined as types explicitly</em></p>
+<p>It is still possible to map this onto ADTs because strings implicitly have names.
+Unlike strings, constant integers and floats must be defined explicitly to ensure
+they have a name.</p>
 
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">"two"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
   <span class="nt">"three"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
   <span class="nt">"five"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
   <span class="nt">"seven"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
-  <span class="nt">"primedigits"</span><span class="p">:</span> <span class="s2">"two|three|five|seven"</span>
+  <span class="nt">"prime-digits"</span><span class="p">:</span> <span class="s2">"two|three|five|seven"</span>
 <span class="p">}</span>
 </pre></div>
+
+<p>In JavaScript, this would just send an integer over the wire.
+In Haskell or Elm, this would be represented as:</p>
+
+<div class="highlight"><pre><span class="kr">data</span> <span class="kt">PrimeDigits</span> <span class="ow">=</span> <span class="kt">Two</span> <span class="o">|</span> <span class="kt">Three</span> <span class="o">|</span> <span class="kt">Five</span> <span class="o">|</span> <span class="kt">Seven</span>
+</pre></div>
+
+<p>This lets you work with the colloquial representation in very different languages.</p>
 
 <h1>
 <a name="prior-art" class="anchor" href="#prior-art"><span class="octicon octicon-link"></span></a>Prior art:</h1>
